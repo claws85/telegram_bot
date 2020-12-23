@@ -111,7 +111,7 @@ def get_updates(offset=None):
     """If no offset provided, will return all available updates
     sent to the bot. If offset is provided, then only messages equal to
     that offset will be returned. Date returned in json format"""
-    url = telegram_url + 'getUpdates?timeout=1'
+    url = telegram_url + 'getUpdates?timeout=100'
     if offset:
         url = url + '&offset={}'.format(offset)
 
