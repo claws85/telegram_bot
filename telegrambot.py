@@ -63,8 +63,10 @@ def main():
                 latest_update_id = latest_update_id + 1
 
         except Exception as e:
-            # reset out latest_update_id variable
-            latest_update_id = None
+            # increase our update id so we don't endlessly cycle round
+            # on the same message that triggered an error
+            if latest_update_id:
+                latest_update_id += 1
 
             print(e)
             dt = datetime.datetime.now().strftime("%x %X")
