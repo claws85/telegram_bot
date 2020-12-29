@@ -146,7 +146,7 @@ def parse_message(message):
 
     template_id = re.search(r'\d+', message)[0]
 
-    texts = re.findall('“(.*?)”', message)
+    texts = re.findall('{(.*?)}', message)
 
     return template_id, texts
 
