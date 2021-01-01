@@ -36,31 +36,32 @@ def main():
             # return all available updates our bot has received
             updates = get_updates(latest_update_id)
 
-            if len(updates['result']) > 0:
+            if updates.get('result'):
+                if len(updates.get('result')) > 0:
 
-                latest_update_id = get_latest_update_id(updates)
+                    latest_update_id = get_latest_update_id(updates)
 
-                message_text = extract_update_text(updates, latest_update_id)
+                    message_text = extract_update_text(updates, latest_update_id)
 
-                # check request is to create a meme or return meme info
-                if 'memelist' in message_text.lower():
-                    meme_info = get_latest_meme_info()
-                    meme_list = get_meme_list(meme_info)
-                    send_text(meme_list)
+                    # check request is to create a meme or return meme info
+                    if 'memelist' in message_text.lower():
+                        meme_info = get_latest_meme_info()
+                        meme_list = get_meme_list(meme_info)
+                        send_text(meme_list)
 
-                if 'makememe' in message_text.lower():
-                    imgflip_params = parse_message(message_text)
+                    if 'makememe' in message_text.lower():
+                        imgflip_params = parse_message(message_text)
 
-                    meme_url = create_meme(
-                        imgflip_params[0],
-                        imgflip_params[1]
-                    )
+                        meme_url = create_meme(
+                            imgflip_params[0],
+                            imgflip_params[1]
+                        )
 
-                    save_edited_meme(meme_url, local_meme_filepath)
+                        save_edited_meme(meme_url, local_meme_filepath)
 
-                    send_photo(local_meme_filepath)
+                        send_photo(local_meme_filepath)
 
-                latest_update_id = latest_update_id + 1
+                    latest_update_id = latest_update_id + 1
 
         except Exception as e:
             # increase our update id so we don't endlessly cycle round
